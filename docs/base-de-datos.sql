@@ -1,5 +1,5 @@
--- TECNI-GRAF: tabla de proyectos (ejecutar en Supabase > SQL Editor)
--- La tabla empieza vacía: no se cargan registros de ejemplo.
+
+-- La tabla empieza vacía y no se cargan registros de ejemplo.
 
 create table if not exists public.proyectos (
   id           bigint generated always as identity primary key,
@@ -12,6 +12,6 @@ create table if not exists public.proyectos (
   constraint codigo_formato check (codigo ~ '^[A-Z0-9-]{3,15}$')
 );
 
--- Con RLS activo y sin políticas, nadie con la clave pública puede leer ni escribir.
--- Solo el backend accede, usando la clave secreta guardada en el servidor.
+-- Con nuestro rls activo y sin políticas nadie con la clave pública puede leer ni escribir
+-- Solo el backend accede usando la clave secreta guardada en el servidor
 alter table public.proyectos enable row level security;
