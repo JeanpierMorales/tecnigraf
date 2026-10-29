@@ -6,7 +6,7 @@ function seguridad(req, res, next) {
     'Referrer-Policy': 'same-origin',
     'Content-Security-Policy': [
       "default-src 'self'",
-      "style-src 'self' https://fonts.googleapis.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src https://fonts.gstatic.com",
       "img-src 'self' data:",
       "connect-src 'self'",
