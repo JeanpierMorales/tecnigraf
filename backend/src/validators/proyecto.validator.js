@@ -12,11 +12,12 @@ const PATRON_CODIGO = /^[A-Z0-9-]{3,15}$/;
 
 const texto = (valor) => (typeof valor === 'string' ? valor.trim() : '');
 
+const estaVacio = (valor) => valor === '' || valor === null || valor === undefined;
+
 const normalizarCodigo = (valor) => texto(valor).toUpperCase();
 
 function numero(valor) {
-  if (valor === '' || valor === null || valor === undefined) return NaN;
-  return Number(valor);
+  return estaVacio(valor) ? NaN : Number(valor);
 }
 
 // Se valida aquí aunque el formulario ya valide: el servidor no confía en el navegador
@@ -48,16 +49,20 @@ function validarProyecto(body = {}) {
     errores.push({ campo: 'tipoDiseno', mensaje: 'El tipo de diseño no es válido.' });
   }
 
-  if (Number.isNaN(datos.horas)) {
+  if (estaVacio(body.horas)) {
     errores.push({ campo: 'horas', mensaje: 'Las horas trabajadas son obligatorias.' });
+  } else if (Number.isNaN(datos.horas)) {
+    errores.push({ campo: 'horas', mensaje: 'Ingrese un número válido.' });
   } else if (datos.horas <= 0) {
     errores.push({ campo: 'horas', mensaje: 'Las horas deben ser mayores que cero.' });
   } else if (datos.horas > 10000) {
     errores.push({ campo: 'horas', mensaje: 'Ingrese un máximo de 10 000 horas.' });
   }
 
-  if (Number.isNaN(datos.costoHora)) {
+  if (estaVacio(body.costoHora)) {
     errores.push({ campo: 'costoHora', mensaje: 'El costo por hora es obligatorio.' });
+  } else if (Number.isNaN(datos.costoHora)) {
+    errores.push({ campo: 'costoHora', mensaje: 'Ingrese un número válido.' });
   } else if (datos.costoHora <= 0) {
     errores.push({ campo: 'costoHora', mensaje: 'El costo por hora debe ser mayor que cero.' });
   } else if (datos.costoHora > 100000) {
