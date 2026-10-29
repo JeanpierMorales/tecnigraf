@@ -1,0 +1,65 @@
+@startuml diagrama-componentes
+title Diagrama de Componentes - Sistema TECNI-GRAF
+
+skinparam componentStyle uml2
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam linetype ortho
+skinparam nodesep 40
+skinparam ranksep 45
+
+actor "Usuario" as usuario
+
+package "frontend/ (navegador)" {
+  [index.html] as vista
+  [styles.css] as estilos
+  [app.js] as appjs
+  [api.js] as apijs
+}
+
+package "backend/ (Node.js + Express)" {
+  interface "API REST\n/api/proyectos" as api
+  [server.js / app.js] as app
+  [seguridad.js\nerrores.js] as middlewares
+  [proyectos.routes.js] as rutas
+  [proyectos.controller.js] as controlador
+  [proyectos.service.js] as servicio
+  [proyecto.validator.js] as validador
+  [proyectos.repository.js] as repositorio
+  [config/supabase.js] as config
+}
+
+database "Supabase (PostgreSQL)" {
+  [tabla proyectos] as tabla
+}
+
+usuario -down-> vista : interactúa
+vista .right.> estilos : usa
+vista .down.> appjs : carga
+appjs -right-> apijs : llama
+apijs -down-> api : fetch (JSON)\nGET / POST / DELETE
+api -down- app
+app -left-> middlewares : aplica
+app -down-> rutas : registra
+rutas -down-> controlador : delega petición
+controlador -down-> servicio : reglas de negocio
+servicio -left-> validador : valida datos
+servicio -down-> repositorio : lee / guarda
+repositorio -down-> config : usa cliente
+config -down-> tabla : supabase-js
+
+note bottom of validador
+  Validaciones:
+  - campos obligatorios
+  - código no repetido
+  - horas > 0, costo > 0
+end note
+
+note right of servicio
+  Cálculos:
+  - valor total = horas x costo
+  - facturación total
+  - promedio por proyecto
+end note
+
+@enduml
