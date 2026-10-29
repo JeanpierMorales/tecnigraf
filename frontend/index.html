@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TECNI-GRAF | Gestión de proyectos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="contenedor topbar-contenido">
+      <span class="marca">TECNI-GRAF</span>
+      <span class="topbar-texto">Gestión de proyectos de diseño gráfico</span>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="encabezado">
+      <h1>Proyectos</h1>
+      <p>Registre los proyectos atendidos y consulte la facturación acumulada.</p>
+    </section>
+
+    <section class="resumen" aria-label="Reporte de facturación">
+      <article class="indicador">
+        <span class="indicador-nombre">Proyectos registrados</span>
+        <strong class="indicador-valor" id="totalProyectos">0</strong>
+      </article>
+      <article class="indicador">
+        <span class="indicador-nombre">Facturación total</span>
+        <strong class="indicador-valor" id="facturacionTotal">S/ 0.00</strong>
+      </article>
+      <article class="indicador">
+        <span class="indicador-nombre">Promedio por proyecto</span>
+        <strong class="indicador-valor" id="promedio">S/ 0.00</strong>
+      </article>
+    </section>
+
+    <div class="paneles">
+      <section class="panel" aria-labelledby="tituloFormulario">
+        <h2 id="tituloFormulario">Nuevo proyecto</h2>
+
+        <form id="formProyecto" novalidate>
+          <div class="campo">
+            <label for="codigo">Código del proyecto</label>
+            <input type="text" id="codigo" name="codigo" maxlength="15" placeholder="Ej. TG-001" autocomplete="off">
+            <small class="campo-error" id="error-codigo"></small>
+          </div>
+
+          <div class="campo">
+            <label for="cliente">Nombre del cliente</label>
+            <input type="text" id="cliente" name="cliente" maxlength="100" placeholder="Ej. Inversiones Andinas S.A.C." autocomplete="off">
+            <small class="campo-error" id="error-cliente"></small>
+          </div>
+
+          <div class="campo">
+            <label for="tipoDiseno">Tipo de diseño</label>
+            <select id="tipoDiseno" name="tipoDiseno">
+              <option value="">Seleccione una opción</option>
+              <option>Branding</option>
+              <option>Logotipo</option>
+              <option>Packaging</option>
+              <option>Diseño editorial</option>
+              <option>Publicidad digital</option>
+              <option>Diseño web / UI</option>
+              <option>Ilustración</option>
+            </select>
+            <small class="campo-error" id="error-tipoDiseno"></small>
+          </div>
+
+          <div class="campo-fila">
+            <div class="campo">
+              <label for="horas">Horas trabajadas</label>
+              <input type="number" id="horas" name="horas" min="0.01" step="0.01" placeholder="0.00" inputmode="decimal">
+              <small class="campo-error" id="error-horas"></small>
+            </div>
+
+            <div class="campo">
+              <label for="costoHora">Costo por hora (S/)</label>
+              <input type="number" id="costoHora" name="costoHora" min="0.01" step="0.01" placeholder="0.00" inputmode="decimal">
+              <small class="campo-error" id="error-costoHora"></small>
+            </div>
+          </div>
+
+          <div class="acciones">
+            <button type="submit" class="boton boton-principal" id="btnRegistrar">Registrar</button>
+            <button type="button" class="boton boton-secundario" id="btnLimpiar">Limpiar</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="tituloTabla">
+        <div class="panel-cabecera">
+          <h2 id="tituloTabla">Proyectos registrados</h2>
+
+          <form class="buscador" id="formBuscar" role="search" novalidate>
+            <label for="buscarCodigo" class="oculto">Buscar por código</label>
+            <input type="text" id="buscarCodigo" maxlength="15" placeholder="Buscar por código" autocomplete="off">
+            <button type="submit" class="boton boton-principal">Buscar</button>
+            <button type="button" class="boton boton-secundario" id="btnVerTodos" hidden>Ver todos</button>
+          </form>
+        </div>
+
+        <p class="aviso" id="avisoBusqueda" role="status" hidden></p>
+
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead>
+              <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Tipo de diseño</th>
+                <th scope="col" class="numero">Horas</th>
+                <th scope="col" class="numero">Costo/hora</th>
+                <th scope="col" class="numero">Valor total</th>
+                <th scope="col"><span class="oculto">Acciones</span></th>
+              </tr>
+            </thead>
+            <tbody id="tablaProyectos"></tbody>
+          </table>
+          <p class="tabla-vacia" id="tablaVacia">Aún no hay proyectos registrados.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <dialog class="dialogo" id="dialogoEliminar" aria-labelledby="tituloDialogo">
+    <h2 id="tituloDialogo">¿Eliminar proyecto?</h2>
+    <p>Se eliminará el proyecto <strong id="codigoEliminar"></strong>. Esta acción no se puede deshacer.</p>
+    <div class="acciones">
+      <button type="button" class="boton boton-peligro" id="btnConfirmarEliminar">Eliminar</button>
+      <button type="button" class="boton boton-secundario" id="btnCancelarEliminar">Cancelar</button>
+    </div>
+  </dialog>
+
+  <div class="notificacion" id="notificacion" role="status" aria-live="polite"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

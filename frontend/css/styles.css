@@ -1,0 +1,522 @@
+/* Paleta y tipografía tomadas del sistema de diseño KANZO */
+:root {
+  --obsidian: #1a1a1a;
+  --graphite: #494947;
+  --gravel: #7b787a;
+  --pebble: #9fa4a2;
+  --mist: #bebebf;
+  --limestone: #dcdad9;
+  --obsidian-rgb: 26, 26, 26;
+  --error: #9b2c2c;
+  --exito: #2f6b47;
+
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+
+  --fs-h1: 56px;
+  --fs-h2: 24px;
+  --fs-lead: 18px;
+  --fs-body: 16px;
+  --fs-small: 15px;
+  --fs-label: 13px;
+
+  --radio-panel: 28px;
+  --radio-campo: 14px;
+  --linea: 1px solid rgba(var(--obsidian-rgb), .14);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--limestone);
+  color: var(--obsidian);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -.03em;
+}
+
+h1 { font-size: var(--fs-h1); line-height: 1.05; }
+h2 { font-size: var(--fs-h2); line-height: 1.2; }
+
+::selection {
+  background: var(--obsidian);
+  color: var(--limestone);
+}
+
+.contenedor {
+  width: min(1240px, 100% - 32px);
+  margin-inline: auto;
+}
+
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Barra superior ---------- */
+
+.topbar {
+  background: var(--obsidian);
+  color: var(--limestone);
+}
+
+.topbar-contenido {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.marca {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.topbar-texto {
+  color: var(--pebble);
+  font-size: var(--fs-small);
+}
+
+/* ---------- Encabezado y reporte ---------- */
+
+.encabezado {
+  padding: 48px 0 28px;
+}
+
+.encabezado p {
+  margin: 10px 0 0;
+  color: var(--graphite);
+  font-size: var(--fs-lead);
+}
+
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.indicador {
+  padding: 22px 24px;
+  border-radius: 22px;
+  background: var(--mist);
+}
+
+.indicador:first-child {
+  background: var(--obsidian);
+  color: var(--limestone);
+}
+
+.indicador-nombre {
+  display: block;
+  color: var(--graphite);
+  font-size: var(--fs-small);
+  font-weight: 500;
+}
+
+.indicador:first-child .indicador-nombre {
+  color: var(--pebble);
+}
+
+.indicador-valor {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Paneles ---------- */
+
+.paneles {
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) 1fr;
+  gap: 24px;
+  align-items: start;
+  padding-bottom: 64px;
+}
+
+.panel {
+  min-width: 0;
+  padding: 28px;
+  border-radius: var(--radio-panel);
+  background: #fff;
+}
+
+.panel > h2 {
+  margin-bottom: 20px;
+}
+
+.panel-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* ---------- Formulario ---------- */
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.campo-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+label {
+  font-size: var(--fs-label);
+  font-weight: 600;
+}
+
+input,
+select {
+  width: 100%;
+  height: 48px;
+  padding: 0 15px;
+  border: var(--linea);
+  border-radius: var(--radio-campo);
+  background: #fff;
+  color: var(--obsidian);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+input::placeholder {
+  color: var(--gravel);
+}
+
+input:focus,
+select:focus {
+  outline: 0;
+  border-color: var(--graphite);
+  box-shadow: 0 0 0 3px rgba(var(--obsidian-rgb), .08);
+}
+
+input.invalido,
+select.invalido {
+  border-color: var(--error);
+}
+
+.campo-error {
+  min-height: 18px;
+  color: var(--error);
+  font-size: var(--fs-label);
+  font-weight: 500;
+}
+
+/* ---------- Botones (píldoras KANZO) ---------- */
+
+.acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.boton {
+  height: 48px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .2s ease, transform .15s ease, opacity .2s ease;
+}
+
+.boton:active {
+  transform: scale(.97);
+}
+
+.boton:focus-visible {
+  outline: 2px solid var(--obsidian);
+  outline-offset: 3px;
+}
+
+.boton:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.boton-principal {
+  background: var(--obsidian);
+  color: var(--limestone);
+}
+
+.boton-principal:hover {
+  background: var(--graphite);
+}
+
+.boton-secundario {
+  background: transparent;
+  color: var(--obsidian);
+  box-shadow: inset 0 0 0 1px rgba(var(--obsidian-rgb), .3);
+}
+
+.boton-secundario:hover {
+  background: rgba(var(--obsidian-rgb), .06);
+}
+
+.boton-peligro {
+  background: var(--error);
+  color: #fff;
+}
+
+.boton-peligro:hover {
+  background: #7f2222;
+}
+
+.acciones .boton {
+  flex: 1;
+}
+
+.boton-eliminar {
+  height: 36px;
+  padding: 0 16px;
+  background: transparent;
+  color: var(--error);
+  box-shadow: inset 0 0 0 1px rgba(155, 44, 44, .35);
+  font-size: var(--fs-label);
+}
+
+.boton-eliminar:hover {
+  background: rgba(155, 44, 44, .08);
+}
+
+/* ---------- Búsqueda ---------- */
+
+.buscador {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  max-width: 460px;
+}
+
+.buscador input {
+  height: 44px;
+}
+
+.buscador .boton {
+  height: 44px;
+  padding: 0 20px;
+  flex: none;
+}
+
+.aviso {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border-radius: var(--radio-campo);
+  font-size: var(--fs-small);
+  font-weight: 500;
+}
+
+.aviso.exito {
+  background: rgba(47, 107, 71, .1);
+  color: var(--exito);
+}
+
+.aviso.error {
+  background: rgba(155, 44, 44, .08);
+  color: var(--error);
+}
+
+/* ---------- Tabla ---------- */
+
+.tabla-contenedor {
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-small);
+}
+
+.tabla th {
+  padding: 0 12px 12px;
+  border-bottom: var(--linea);
+  color: var(--graphite);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.tabla td {
+  padding: 14px 12px;
+  border-bottom: var(--linea);
+  vertical-align: middle;
+}
+
+.tabla tbody tr:hover {
+  background: rgba(var(--obsidian-rgb), .03);
+}
+
+.tabla .numero {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.tabla .codigo,
+.tabla .total {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tabla .accion {
+  text-align: right;
+}
+
+.tabla-vacia {
+  margin: 0;
+  padding: 40px 12px;
+  color: var(--graphite);
+  text-align: center;
+}
+
+/* ---------- Diálogo de confirmación ---------- */
+
+.dialogo {
+  width: min(420px, 100% - 32px);
+  padding: 28px;
+  border: 0;
+  border-radius: var(--radio-panel);
+  background: #fff;
+  color: var(--obsidian);
+}
+
+.dialogo::backdrop {
+  background: rgba(var(--obsidian-rgb), .55);
+  backdrop-filter: blur(4px);
+}
+
+.dialogo p {
+  margin: 10px 0 20px;
+  color: var(--graphite);
+}
+
+/* ---------- Notificación ---------- */
+
+.notificacion {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  max-width: calc(100% - 32px);
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: var(--obsidian);
+  color: var(--limestone);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 12px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.notificacion.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.notificacion.error {
+  background: var(--error);
+  color: #fff;
+}
+
+/* ---------- Adaptación a pantallas ---------- */
+
+@media (max-width: 1024px) {
+  :root { --fs-h1: 44px; }
+
+  .paneles {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  :root { --fs-h1: 36px; }
+
+  .topbar-texto { display: none; }
+
+  .encabezado { padding: 32px 0 20px; }
+
+  .resumen {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .indicador-valor { font-size: 28px; }
+
+  .panel { padding: 22px 18px; border-radius: 22px; }
+
+  .buscador { max-width: none; flex-wrap: wrap; }
+  .buscador input { flex: 1 1 100%; }
+  .buscador .boton { flex: 1; }
+
+  /* En celular cada proyecto se muestra como una ficha */
+  .tabla thead { display: none; }
+
+  .tabla tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 12px;
+    padding: 14px 0;
+    border-bottom: var(--linea);
+  }
+
+  .tabla td {
+    padding: 0;
+    border: 0;
+  }
+
+  .tabla .numero { text-align: left; }
+  .tabla td:nth-child(2) { grid-column: 1 / -1; }
+  .tabla .accion { grid-column: 1 / -1; text-align: left; margin-top: 8px; }
+
+  .tabla td:nth-child(n+3):not(.accion)::before {
+    display: block;
+    color: var(--graphite);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .tabla td:nth-child(3)::before { content: 'Tipo de diseño'; }
+  .tabla td:nth-child(4)::before { content: 'Horas'; }
+  .tabla td:nth-child(5)::before { content: 'Costo/hora'; }
+  .tabla td:nth-child(6)::before { content: 'Valor total'; }
+}
